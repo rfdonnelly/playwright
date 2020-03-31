@@ -5,6 +5,7 @@ module.exports = {
       project: './tsconfig.json',
       ecmaVersion: 9,
       sourceType: 'module',
+      createDefaultProgram: true,
     },
 
     /**
