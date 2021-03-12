@@ -98,8 +98,8 @@ Defaults to `'visible'`. Can be either:
 * `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or `visibility:hidden`.
   This is opposite to the `'visible'` option.
 
-## js-python-wait-for-function-polling
-* langs: js, python
+## js-python-go-wait-for-function-polling
+* langs: js, python, go
 - `polling` <[float]|"raf">
 
 If [`option: polling`] is `'raf'`, then [`param: expression`] is constantly executed in `requestAnimationFrame`
@@ -256,7 +256,7 @@ Function to be evaluated in the worker context.
 Function to be evaluated in the worker context.
 
 ## python-context-option-viewport
-* langs: python
+* langs: python, go
 - `viewport` <[null]|[Object]>
   - `width` <[int]> page width in pixels.
   - `height` <[int]> page height in pixels.
@@ -390,7 +390,7 @@ call [`method: BrowserContext.close`] for the HAR to be saved.
 Optional setting to control whether to omit request content from the HAR. Defaults to `false`.
 
 ## context-option-recordvideo
-* langs: js
+* langs: js, go
 - `recordVideo` <[Object]>
   - `dir` <[path]> Path to the directory to put videos into.
   - `size` <[Object]> Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport`

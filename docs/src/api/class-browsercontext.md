@@ -191,7 +191,17 @@ Script to be evaluated in all pages in the browser context.
 * langs: csharp, java
 - `script` <[string]|[path]>
 
-Script to be evaluated in all pages in the browser context.
+### param: BrowserContext.addInitScript.script
+* langs: go
+- `script` <[string]>
+
+Optional Script source to be evaluated in all pages in the browser context.
+
+### param: BrowserContext.addInitScript.path
+* langs: go
+- `path` <[string]>
+
+Optional Script path to be evaluated in all pages in the browser context.
 
 ### param: BrowserContext.addInitScript.arg
 * langs: js
@@ -735,7 +745,7 @@ A glob pattern, regex pattern or predicate receiving [URL] to match while routin
 handler function to route the request.
 
 ### param: BrowserContext.route.handler
-* langs: csharp, java
+* langs: csharp, java,go
 - `handler` <[function]\([Route]\)>
 
 handler function to route the request.
@@ -879,7 +889,7 @@ A glob pattern, regex pattern or predicate receiving [URL] used to register a ro
 [`method: BrowserContext.route`].
 
 ### param: BrowserContext.unroute.handler
-* langs: js, python
+* langs: js, python, go
 - `handler` <[function]\([Route], [Request]\)>
 
 Optional handler function used to register a routing with [`method: BrowserContext.route`].

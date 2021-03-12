@@ -95,7 +95,14 @@ If set changes the request URL. New URL must have same protocol as original one.
 If set changes the request method (e.g. GET or POST)
 
 ### option: Route.continue.postData
+* langs: js
 - `postData` <[string]|[Buffer]>
+
+If set changes the post data of request
+
+### option: Route.continue.postData
+* langs: go
+- `postData` <[any]>
 
 If set changes the post data of request
 
@@ -180,6 +187,12 @@ If set, equals to setting `Content-Type` response header.
 ### option: Route.fulfill.body
 * langs: js, python
 - `body` <[string]|[Buffer]>
+
+Response body.
+
+### option: Route.fulfill.body
+* langs: go
+- `body` <[any]>
 
 Response body.
 

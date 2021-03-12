@@ -448,6 +448,18 @@ Script to be evaluated in all pages in the browser context.
 
 Optional argument to pass to [`param: script`] (only supported when passing a function).
 
+### param: Page.addInitScript.script
+* langs: go
+- `script` <[string]>
+
+Optional Script source to be evaluated in all pages in the browser context.
+
+### param: Page.addInitScript.path
+* langs: go
+- `path` <[string]>
+
+Optional Script path to be evaluated in all pages in the browser context.
+
 ## async method: Page.addScriptTag
 - returns: <[ElementHandle]>
 
@@ -2142,7 +2154,7 @@ Enabling routing disables http cache.
 A glob pattern, regex pattern or predicate receiving [URL] to match while routing.
 
 ### param: Page.route.handler
-* langs: js, python
+* langs: js, python, go
 - `handler` <[function]\([Route], [Request]\)>
 
 handler function to route the request.
@@ -2510,7 +2522,7 @@ the [`param: url`].
 A glob pattern, regex pattern or predicate receiving [URL] to match while routing.
 
 ### param: Page.unroute.handler
-* langs: js, python
+* langs: js, python, go
 - `handler` <[function]\([Route], [Request]\)>
 
 Optional handler function to route the request.
@@ -2731,7 +2743,7 @@ Shortcut for main frame's [`method: Frame.waitForFunction`].
 
 Optional argument to pass to [`param: expression`].
 
-### option: Page.waitForFunction.polling = %%-js-python-wait-for-function-polling-%%
+### option: Page.waitForFunction.polling = %%-js-python-go-wait-for-function-polling-%%
 
 ### option: Page.waitForFunction.polling = %%-csharp-java-wait-for-function-polling-%%
 

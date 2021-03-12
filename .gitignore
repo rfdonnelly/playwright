@@ -19,3 +19,4 @@ drivers/
 nohup.out
 api.json
 .trace
+utils/doclint/generate_types/csharp/

@@ -1206,7 +1206,7 @@ frame.wait_for_function("selector => !!document.querySelector(selector)", select
 
 Optional argument to pass to [`param: expression`].
 
-### option: Frame.waitForFunction.polling = %%-js-python-wait-for-function-polling-%%
+### option: Frame.waitForFunction.polling = %%-js-python-go-wait-for-function-polling-%%
 
 ### option: Frame.waitForFunction.polling = %%-csharp-java-wait-for-function-polling-%%
 
