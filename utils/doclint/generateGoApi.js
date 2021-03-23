@@ -94,8 +94,6 @@ let classNameMap;
    */
   let appendFile = (file, data) => {
     let content = data.join(`${EOL}\t`);
-    if (file.includes("interfaces"))
-      return
     fs.appendFileSync(file, content);
   }
 
