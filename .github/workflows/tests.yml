@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - release-*
+      - test-missing-lib-for-webgl
   pull_request:
     branches:
       - master
@@ -147,6 +148,12 @@ jobs:
     - run: mkdir -p coredumps
     # Set core dump file name pattern
     - run: sudo bash -c 'echo "$(pwd -P)/coredumps/core-pid_%p.dump" > /proc/sys/kernel/core_pattern'
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      env:
+        BROWSER: ${{ matrix.browser }}
+        HEADFUL: 1
+        FOLIO_JSON_OUTPUT_NAME: "test-results/report.json"
     # XVFB-RUN merges both STDOUT and STDERR, whereas we need only STDERR
     # Wrap `npm run` in a subshell to redirect STDERR to file.
     # Enable core dumps in the subshell.
