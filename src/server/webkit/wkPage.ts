@@ -489,7 +489,8 @@ export class WKPage implements PageDelegate {
       return;
     }
     if (level === 'error' && source === 'javascript') {
-      const message = text.startsWith('Error: ') ? text.substring(7) : text;
+      const separationIdx = text.indexOf(':');
+      const message = separationIdx !== -1 ? text.substring(separationIdx + 2) : text;
       const error = new Error(message);
       if (event.message.stackTrace) {
         error.stack = event.message.stackTrace.map(callFrame => {
@@ -498,6 +499,9 @@ export class WKPage implements PageDelegate {
       } else {
         error.stack = '';
       }
+      const name = separationIdx !== -1 && text.slice(0, separationIdx);
+      if (name)
+        error.name = name;
       this._page.emit(Page.Events.PageError, error);
       return;
     }

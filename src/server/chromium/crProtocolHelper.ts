@@ -82,10 +82,14 @@ export function exceptionToError(exceptionDetails: Protocol.Runtime.ExceptionDet
     message = lines.slice(0, firstStackTraceLine).join('\n');
     stack = messageWithStack;
   }
-  const match = message.match(/^[a-zA-Z0-0_]*Error: (.*)$/);
-  if (match)
-    message = match[1];
+  const separationIdx = message.indexOf(':');
+  if (separationIdx !== -1)
+    message = message.substring(separationIdx + 2);
+
   const err = new Error(message);
   err.stack = stack;
+  const nameProperty = exceptionDetails.exception?.preview?.properties.find(p => p.name === 'name');
+  if (nameProperty?.value)
+    err.name = nameProperty?.value;
   return err;
 }

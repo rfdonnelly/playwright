@@ -31,6 +31,21 @@ it('should fire', async ({page, server, isWebKit}) => {
   expect(error.stack).toBe(stack);
 });
 
+it('should contain the Error.name property', async ({ page }) => {
+  const [error] = await Promise.all([
+    page.waitForEvent('pageerror'),
+    page.evaluate(() => {
+      setTimeout(() => {
+        const error = new Error('my-message');
+        error.name = 'my-name';
+        throw error;
+      }, 0);
+    })
+  ]);
+  expect(error.name).toBe('my-name');
+  expect(error.message).toBe('my-message');
+});
+
 it('should contain sourceURL', (test, { browserName }) => {
   test.fail(browserName === 'webkit');
 }, async ({page, server}) => {
@@ -41,7 +56,7 @@ it('should contain sourceURL', (test, { browserName }) => {
   expect(error.stack).toContain('myscript.js');
 });
 
-it('should handle odd values', async ({page, isFirefox}) => {
+it('should handle odd values', async ({page}) => {
   const cases = [
     [null, 'null'],
     [undefined, 'undefined'],
@@ -53,7 +68,7 @@ it('should handle odd values', async ({page, isFirefox}) => {
       page.waitForEvent('pageerror'),
       page.evaluate(value => setTimeout(() => { throw value; }, 0), value),
     ]);
-    expect(error.message).toBe(isFirefox ? 'uncaught exception: ' + message : message);
+    expect(error.message).toBe(message);
   }
 });
 
