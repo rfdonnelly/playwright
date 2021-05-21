@@ -350,6 +350,7 @@ export async function prepareBrowserContextParams(options: BrowserContextOptions
   const contextParams: channels.BrowserNewContextParams = {
     sdkLanguage: 'javascript',
     ...options,
+    colorScheme: options.colorScheme === null ? 'null' : options.colorScheme,
     viewport: options.viewport === null ? undefined : options.viewport,
     noDefaultViewport: options.viewport === null,
     extraHTTPHeaders: options.extraHTTPHeaders ? headersObjectToArray(options.extraHTTPHeaders) : undefined,

@@ -87,7 +87,7 @@ export interface PageDelegate {
 type PageState = {
   emulatedSize: { screen: types.Size, viewport: types.Size } | null;
   mediaType: types.MediaType | null;
-  colorScheme: types.ColorScheme | null;
+  colorScheme: types.ColorScheme;
   extraHTTPHeaders: types.HeadersArray | null;
 };
 
@@ -159,7 +159,7 @@ export class Page extends SdkObject {
     this._state = {
       emulatedSize: browserContext._options.viewport ? { viewport: browserContext._options.viewport, screen: browserContext._options.screen || browserContext._options.viewport } : null,
       mediaType: null,
-      colorScheme: null,
+      colorScheme: 'light',
       extraHTTPHeaders: null,
     };
     this.accessibility = new accessibility.Accessibility(delegate.getAccessibilityTree.bind(delegate));
@@ -359,7 +359,7 @@ export class Page extends SdkObject {
     }), this._timeoutSettings.navigationTimeout(options));
   }
 
-  async emulateMedia(options: { media?: types.MediaType | null, colorScheme?: types.ColorScheme | null }) {
+  async emulateMedia(options: { media?: types.MediaType | null, colorScheme?: types.ColorScheme }) {
     if (options.media !== undefined)
       assert(options.media === null || types.mediaTypes.has(options.media), 'media: expected one of (screen|print|null)');
     if (options.colorScheme !== undefined)

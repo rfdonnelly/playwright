@@ -1670,7 +1670,7 @@ export interface Page {
   emulateMedia(options?: {
     /**
      * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
-     * `null` disables color scheme emulation.
+     * `null` disables color scheme emulation and uses the browser's operating-system defaults.
      */
     colorScheme?: null|"light"|"dark"|"no-preference";
 
@@ -6962,11 +6962,12 @@ export interface BrowserType<Unused = {}> {
     chromiumSandbox?: boolean;
 
     /**
-     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
+     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+     * `null` disables color scheme emulation and uses the browser's operating-system defaults. See
      * [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.
      * Defaults to `'light'`.
      */
-    colorScheme?: "light"|"dark"|"no-preference";
+    colorScheme?: null|"light"|"dark"|"no-preference";
 
     /**
      * Specify device scale factor (can be thought of as dpr). Defaults to `1`.
@@ -8059,11 +8060,12 @@ export interface AndroidDevice {
     bypassCSP?: boolean;
 
     /**
-     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
+     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+     * `null` disables color scheme emulation and uses the browser's operating-system defaults. See
      * [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.
      * Defaults to `'light'`.
      */
-    colorScheme?: "light"|"dark"|"no-preference";
+    colorScheme?: null|"light"|"dark"|"no-preference";
 
     /**
      * Optional package name to launch instead of default Chrome for Android.
@@ -8811,11 +8813,12 @@ export interface Browser extends EventEmitter {
     bypassCSP?: boolean;
 
     /**
-     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
+     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+     * `null` disables color scheme emulation and uses the browser's operating-system defaults. See
      * [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.
      * Defaults to `'light'`.
      */
-    colorScheme?: "light"|"dark"|"no-preference";
+    colorScheme?: null|"light"|"dark"|"no-preference";
 
     /**
      * Specify device scale factor (can be thought of as dpr). Defaults to `1`.
@@ -9571,11 +9574,12 @@ export interface Electron {
     bypassCSP?: boolean;
 
     /**
-     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
+     * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+     * `null` disables color scheme emulation and uses the browser's operating-system defaults. See
      * [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.
      * Defaults to `'light'`.
      */
-    colorScheme?: "light"|"dark"|"no-preference";
+    colorScheme?: null|"light"|"dark"|"no-preference";
 
     /**
      * Current working directory to launch application from.
@@ -10875,11 +10879,12 @@ export interface BrowserContextOptions {
   bypassCSP?: boolean;
 
   /**
-   * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
+   * Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+   * `null` disables color scheme emulation and uses the browser's operating-system defaults. See
    * [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.
    * Defaults to `'light'`.
    */
-  colorScheme?: "light"|"dark"|"no-preference";
+  colorScheme?: null|"light"|"dark"|"no-preference";
 
   /**
    * Specify device scale factor (can be thought of as dpr). Defaults to `1`.

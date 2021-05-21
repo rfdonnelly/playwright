@@ -312,7 +312,7 @@ export type BrowserTypeLaunchPersistentContextParams = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {
@@ -381,7 +381,7 @@ export type BrowserTypeLaunchPersistentContextOptions = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {
@@ -470,7 +470,7 @@ export type BrowserNewContextParams = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {
@@ -526,7 +526,7 @@ export type BrowserNewContextOptions = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {
@@ -2557,7 +2557,7 @@ export type ElectronLaunchParams = {
   timeout?: number,
   acceptDownloads?: boolean,
   bypassCSP?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   extraHTTPHeaders?: NameValue[],
   geolocation?: {
     longitude: number,
@@ -2592,7 +2592,7 @@ export type ElectronLaunchOptions = {
   timeout?: number,
   acceptDownloads?: boolean,
   bypassCSP?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   extraHTTPHeaders?: NameValue[],
   geolocation?: {
     longitude: number,
@@ -2933,7 +2933,7 @@ export type AndroidDeviceLaunchBrowserParams = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {
@@ -2977,7 +2977,7 @@ export type AndroidDeviceLaunchBrowserOptions = {
   deviceScaleFactor?: number,
   isMobile?: boolean,
   hasTouch?: boolean,
-  colorScheme?: 'dark' | 'light' | 'no-preference',
+  colorScheme?: 'dark' | 'light' | 'no-preference' | 'null',
   acceptDownloads?: boolean,
   _debugName?: string,
   recordVideo?: {

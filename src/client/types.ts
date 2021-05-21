@@ -47,13 +47,14 @@ export type SetStorageState = {
 export type LifecycleEvent = 'load' | 'domcontentloaded' | 'networkidle';
 export const kLifecycleEvents: Set<LifecycleEvent> = new Set(['load', 'domcontentloaded', 'networkidle']);
 
-export type BrowserContextOptions = Omit<channels.BrowserNewContextOptions, 'viewport' | 'noDefaultViewport' | 'extraHTTPHeaders' | 'storageState'> & {
+export type BrowserContextOptions = Omit<channels.BrowserNewContextOptions, 'viewport' | 'noDefaultViewport' | 'extraHTTPHeaders' | 'storageState' | 'colorScheme'> & {
   viewport?: Size | null,
   extraHTTPHeaders?: Headers,
   logger?: Logger,
   videosPath?: string,
   videoSize?: Size,
   storageState?: string | channels.BrowserNewContextOptions['storageState'],
+  colorScheme?: 'dark' | 'light' | 'no-preference' | null,
 };
 
 type LaunchOverrides = {

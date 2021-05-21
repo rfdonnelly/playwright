@@ -81,8 +81,8 @@ export type FilePayload = {
 export type MediaType = 'screen' | 'print';
 export const mediaTypes: Set<MediaType> = new Set(['screen', 'print']);
 
-export type ColorScheme = 'dark' | 'light' | 'no-preference';
-export const colorSchemes: Set<ColorScheme> = new Set(['dark', 'light', 'no-preference']);
+export type ColorScheme = 'dark' | 'light' | 'no-preference' | 'null';
+export const colorSchemes: Set<ColorScheme> = new Set(['dark', 'light', 'no-preference', 'null']);
 
 export type DeviceDescriptor = {
   userAgent: string,

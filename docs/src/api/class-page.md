@@ -968,7 +968,7 @@ Passing `null` disables CSS media emulation.
 - `colorScheme` <null|[ColorScheme]<"light"|"dark"|"no-preference">>
 
 Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
-`null` disables color scheme emulation.
+`null` disables color scheme emulation and uses the browser's operating-system defaults.
 
 ## async method: Page.evalOnSelector
 * langs:

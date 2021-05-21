@@ -120,7 +120,7 @@ export class PageDispatcher extends Dispatcher<Page, channels.PageInitializer> i
   async emulateMedia(params: channels.PageEmulateMediaParams, metadata: CallMetadata): Promise<void> {
     await this._page.emulateMedia({
       media: params.media === 'null' ? null : params.media,
-      colorScheme: params.colorScheme === 'null' ? null : params.colorScheme,
+      colorScheme: params.colorScheme,
     });
   }
 

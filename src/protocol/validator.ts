@@ -230,7 +230,7 @@ export function createScheme(tChannel: (name: string) => Validator): Scheme {
     deviceScaleFactor: tOptional(tNumber),
     isMobile: tOptional(tBoolean),
     hasTouch: tOptional(tBoolean),
-    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference'])),
+    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference', 'null'])),
     acceptDownloads: tOptional(tBoolean),
     _debugName: tOptional(tString),
     recordVideo: tOptional(tObject({
@@ -288,7 +288,7 @@ export function createScheme(tChannel: (name: string) => Validator): Scheme {
     deviceScaleFactor: tOptional(tNumber),
     isMobile: tOptional(tBoolean),
     hasTouch: tOptional(tBoolean),
-    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference'])),
+    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference', 'null'])),
     acceptDownloads: tOptional(tBoolean),
     _debugName: tOptional(tString),
     recordVideo: tOptional(tObject({
@@ -975,7 +975,7 @@ export function createScheme(tChannel: (name: string) => Validator): Scheme {
     timeout: tOptional(tNumber),
     acceptDownloads: tOptional(tBoolean),
     bypassCSP: tOptional(tBoolean),
-    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference'])),
+    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference', 'null'])),
     extraHTTPHeaders: tOptional(tArray(tType('NameValue'))),
     geolocation: tOptional(tObject({
       longitude: tNumber,
@@ -1127,7 +1127,7 @@ export function createScheme(tChannel: (name: string) => Validator): Scheme {
     deviceScaleFactor: tOptional(tNumber),
     isMobile: tOptional(tBoolean),
     hasTouch: tOptional(tBoolean),
-    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference'])),
+    colorScheme: tOptional(tEnum(['dark', 'light', 'no-preference', 'null'])),
     acceptDownloads: tOptional(tBoolean),
     _debugName: tOptional(tString),
     recordVideo: tOptional(tObject({

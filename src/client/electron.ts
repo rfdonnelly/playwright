@@ -29,9 +29,10 @@ import { Page } from './page';
 import { Env, WaitForEventOptions, Headers } from './types';
 import { Waiter } from './waiter';
 
-type ElectronOptions = Omit<channels.ElectronLaunchOptions, 'env'|'extraHTTPHeaders'> & {
+type ElectronOptions = Omit<channels.ElectronLaunchOptions, 'env'|'extraHTTPHeaders'|'colorScheme'> & {
   env?: Env,
   extraHTTPHeaders?: Headers,
+  colorScheme?: 'dark' | 'light' | 'no-preference' | null,
 };
 
 type ElectronAppType = typeof import('electron');
@@ -50,6 +51,7 @@ export class Electron extends ChannelOwner<channels.ElectronChannel, channels.El
       const params: channels.ElectronLaunchParams = {
         sdkLanguage: 'javascript',
         ...options,
+        colorScheme: options.colorScheme === null ? 'null' : options.colorScheme,
         extraHTTPHeaders: options.extraHTTPHeaders && headersObjectToArray(options.extraHTTPHeaders),
         env: envObjectToArray(options.env ? options.env : process.env),
       };

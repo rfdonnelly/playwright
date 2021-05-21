@@ -312,6 +312,8 @@ ContextOptions:
       - dark
       - light
       - no-preference
+      # Reset emulated value to the system default.
+      - null
     acceptDownloads: boolean?
     _debugName: string?
     recordVideo:
@@ -2102,6 +2104,8 @@ Electron:
           - dark
           - light
           - no-preference
+          # Reset emulated value to the system default.
+          - null
         extraHTTPHeaders:
           type: array?
           items: NameValue
@@ -2374,6 +2378,8 @@ AndroidDevice:
           - dark
           - light
           - no-preference
+          # Reset emulated value to the system default.
+          - null
         acceptDownloads: boolean?
         _debugName: string?
         recordVideo:

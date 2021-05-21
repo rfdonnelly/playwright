@@ -361,10 +361,11 @@ Whether to emulate network being offline. Defaults to `false`.
 Credentials for [HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication).
 
 ## context-option-colorscheme
-- `colorScheme` <[ColorScheme]<"light"|"dark"|"no-preference">>
+- `colorScheme` <null|[ColorScheme]<"light"|"dark"|"no-preference">>
 
-Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See
-[`method: Page.emulateMedia`] for more details. Defaults to `'light'`.
+Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. Passing
+`null` disables color scheme emulation and uses the browser's operating-system defaults.
+See [`method: Page.emulateMedia`] for more details. Defaults to `'light'`.
 
 ## context-option-logger
 * langs: js
