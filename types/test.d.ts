@@ -118,6 +118,26 @@ export interface Project<TestArgs = {}, WorkerArgs = {}> extends ProjectBase {
 
 export type FullProject<TestArgs = {}, WorkerArgs = {}> = Required<Project<TestArgs, WorkerArgs>>;
 
+export type WebServerConfig = {
+  /**
+   * Shell command to start the webserver. For example `npm run start`.
+   */
+  command: string,
+  /**
+   * The port that your server is expected to appear on. If not specified, it does get automatically collected via the 
+   * command output.
+   */
+  port?: number,
+  /**
+   * How long to wait for the server to start up in milliseconds. Defaults to 60000.
+   */
+  timeout?: number,
+  /**
+   * Environment variables which get set during the execution. Default it will use the environment variables from the current process.
+   */
+  env?: Record<string, string>
+};
+
 /**
  * Testing configuration.
  */
@@ -207,6 +227,11 @@ interface ConfigBase {
   updateSnapshots?: UpdateSnapshots;
 
   /**
+   * Launch a web server before the tests start.
+   */
+   webServer?: WebServerConfig;
+
+  /**
    * The maximum number of concurrent worker processes to use for parallelizing tests.
    */
   workers?: number;
@@ -239,6 +264,7 @@ export interface FullConfig {
   shard: Shard;
   updateSnapshots: UpdateSnapshots;
   workers: number;
+  webServer: WebServerConfig | null;
 }
 
 export type TestStatus = 'passed' | 'failed' | 'timedOut' | 'skipped';
@@ -1168,6 +1194,11 @@ export type PlaywrightWorkerArgs = {
    * Browser instance, shared between multiple tests.
    */
   browser: Browser;
+
+  /**
+   * URL of the web server. For example, http://localhost:1234
+   */
+  baseURL: String;
 };
 
 /**

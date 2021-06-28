@@ -35,6 +35,7 @@ import EmptyReporter from './reporters/empty';
 import { ProjectImpl } from './project';
 import { Minimatch } from 'minimatch';
 import { Config } from './types';
+import { WebServer } from './webServer';
 
 const removeFolderAsync = promisify(rimraf);
 const readDirAsync = promisify(fs.readdir);
@@ -145,9 +146,17 @@ export class Runner {
       testFiles.forEach(file => allTestFiles.add(file));
     }
 
-    let globalSetupResult: any;
+    let globalSetupResultTeardown: any;
     if (config.globalSetup)
-      globalSetupResult = await this._loader.loadGlobalHook(config.globalSetup, 'globalSetup')(this._loader.fullConfig());
+      globalSetupResultTeardown = await this._loader.loadGlobalHook(config.globalSetup, 'globalSetup')(this._loader.fullConfig());
+    let webServer: WebServer|null = null;
+    try {
+      if (config.webServer)
+        webServer = await WebServer.create(config.webServer);
+    } catch (error) {
+      console.log(error instanceof Error ? error.message : error);
+      return 'failed';
+    }
     try {
       for (const file of allTestFiles)
         this._loader.loadTestFile(file);
@@ -230,10 +239,11 @@ export class Runner {
         return 'sigint';
       return hasWorkerErrors || rootSuite.findSpec(spec => !spec.ok()) ? 'failed' : 'passed';
     } finally {
-      if (globalSetupResult && typeof globalSetupResult === 'function')
-        await globalSetupResult(this._loader.fullConfig());
+      if (globalSetupResultTeardown && typeof globalSetupResultTeardown === 'function')
+        await globalSetupResultTeardown(this._loader.fullConfig());
       if (config.globalTeardown)
         await this._loader.loadGlobalHook(config.globalTeardown, 'globalTeardown')(this._loader.fullConfig());
+      await webServer?.kill();
     }
   }
 }

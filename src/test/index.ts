@@ -52,6 +52,12 @@ export const test = _baseTest.extend<PlaywrightTestArgs & PlaywrightTestOptions,
     await removeFolders([artifactsFolder]);
   }, { scope: 'worker' } ],
 
+  baseURL: [async ({ }, use) => {
+    if (!process.env.PLAYWRIGHT_BASE_URL)
+      throw new Error('A web server must be specified to use baseURL. See `webServer` in the config options, or set the PLAYWRIGHT_BASE_URL environment variable.');
+    await use(process.env.PLAYWRIGHT_BASE_URL);
+  }, {scope: 'worker'}],
+
   screenshot: 'off',
   video: 'off',
   trace: 'off',
