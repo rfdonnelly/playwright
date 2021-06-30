@@ -294,6 +294,9 @@ function validateConfig(file: string, config: Config) {
     config.projects.forEach((project, index) => {
       validateProject(file, project, `config.projects[${index}]`);
     });
+    const projectNames = config.projects.map(project => project.name);
+    if (new Set(projectNames).size !== projectNames.length)
+      throw errorWithFile(file, `config.projects[].name: project names must be unique`);
   }
 
   if ('quiet' in config && config.quiet !== undefined) {
