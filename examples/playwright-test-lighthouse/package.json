@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.13.0",
+    "lighthouse": "^8.1.0"
+  }
+}
