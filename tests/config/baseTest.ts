@@ -184,8 +184,7 @@ const baseFixtures: Fixtures<{}, BaseOptions & BaseFixtures> = {
   playwright: [ async ({ mode }, run, workerInfo) => {
     const modeImpl = {
       default: new DefaultMode(),
-      service: new ServiceMode(),
-      ghService: new ServiceModeWorkersOverGitHubAction(),
+      service: new ServiceModeWorkersOverGitHubAction(),
       driver: new DriverMode(),
     }[mode];
     require('../../lib/utils/utils').setUnderTest();
