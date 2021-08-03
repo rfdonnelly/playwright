@@ -156,12 +156,10 @@ class ServiceModeWorkersOverGitHubAction {
 
   async setup() {
     this._instance = await PlaywrightGitHubActionJob.create()
-    this._playwrightObject = this._instance.playwright();
-    return this._playwrightObject;
+    return this._instance.playwright();
   }
 
   async teardown() {
-    await this._playwrightObject.close();
     await this._instance.close()
   }
 }
