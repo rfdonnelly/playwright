@@ -48,7 +48,7 @@ const testDir = path.join(__dirname, '..');
 const config: Config<CommonOptions & PlaywrightOptions> = {
   testDir,
   outputDir,
-  timeout: video || process.env.PWTRACE ? 60000 : 30000,
+  timeout: 0,
   globalTimeout: 5400000,
   workers: process.env.CI ? 1 : undefined,
   forbidOnly: !!process.env.CI,
