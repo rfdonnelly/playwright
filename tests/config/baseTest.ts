@@ -24,6 +24,8 @@ import * as childProcess from 'child_process';
 import { start } from '../../lib/outofprocess';
 import { PlaywrightClient } from '../../lib/remote/playwrightClient';
 import type { LaunchOptions } from '../../index';
+import { randomUUID } from 'crypto'
+import { Octokit } from "@octokit/rest";
 
 export type BrowserName = 'chromium' | 'firefox' | 'webkit';
 type Mode = 'default' | 'driver' | 'service';
@@ -92,6 +94,77 @@ class ServiceMode {
   }
 }
 
+class PlaywrightGitHubActionJob {
+  private _octokit: Octokit;
+  private _id: string;
+  private _service: any;
+  private _playwright: any;
+  constructor() {
+    this._id = randomUUID()
+    this._octokit = new Octokit({
+      auth: process.env.USER_GITHUB_TOKEN,
+    });
+  }
+
+  /**
+   * @returns {Promise<PlaywrightGitHubActionJob>}
+   */
+  static async create() {
+    const job = new PlaywrightGitHubActionJob();
+    await job._startGitHubJob()
+    await job._connectToTunnel();
+    return job;
+  }
+
+  async _startGitHubJob() {
+    const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/")
+
+    await this._octokit.actions.createWorkflowDispatch({
+      owner,
+      repo,
+      workflow_id: "worker.yml",
+      ref: process.env.GITHUB_REF,
+      inputs: {
+        id: this._id
+      }
+    })
+  }
+
+  async _connectToTunnel() {
+    const wsEndpoint = `ws://95.217.208.228:8081/connect/${this._id}`
+    this._service = await PlaywrightClient.connect({
+      wsEndpoint,
+      forwardPorts: [3000],
+      timeout: 5 * 60 * 1000,
+    })
+    /** @type{import('playwright-core')} */
+    this._playwright = await this._service.playwright()
+  }
+
+  playwright() {
+    return this._playwright
+  }
+
+  async close() {
+    this._service.close();
+  }
+}
+
+class ServiceModeWorkersOverGitHubAction {
+  private _playwrightObject: any;
+  private _instance: PlaywrightGitHubActionJob;
+
+  async setup() {
+    this._instance = await PlaywrightGitHubActionJob.create()
+    this._playwrightObject = this._instance.playwright;
+    return this._playwrightObject;
+  }
+
+  async teardown() {
+    await this._playwrightObject.close();
+  }
+}
+
 class DefaultMode {
   async setup(workerIndex: number) {
     return require('../../index');
@@ -112,6 +185,7 @@ const baseFixtures: Fixtures<{}, BaseOptions & BaseFixtures> = {
     const modeImpl = {
       default: new DefaultMode(),
       service: new ServiceMode(),
+      ghService: new ServiceModeWorkersOverGitHubAction(),
       driver: new DriverMode(),
     }[mode];
     require('../../lib/utils/utils').setUnderTest();
