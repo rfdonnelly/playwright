@@ -41,7 +41,7 @@ export class PlaywrightServer {
       await gracefullyCloseAll().catch(e => {});
     };
     const delegate: PlaywrightServerDelegate = {
-      path: '/ws',
+      path: '/pw-ws',
       allowMultipleClients: false,
       onClose: cleanup,
       onConnect: async (connection: DispatcherConnection) => {

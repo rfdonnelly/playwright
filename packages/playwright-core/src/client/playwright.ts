@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import dns from 'dns';
 import net from 'net';
 import util from 'util';
 import * as channels from '../protocol/channels';
@@ -27,7 +26,6 @@ import { Electron } from './electron';
 import { Fetch } from './fetch';
 import { Selectors, SelectorsOwner } from './selectors';
 import { Size } from './types';
-const dnsLookupAsync = util.promisify(dns.lookup);
 
 type DeviceDescriptor = {
   userAgent: string,
@@ -93,6 +91,7 @@ export class Playwright extends ChannelOwner<channels.PlaywrightChannel, channel
   }
 
   private async _onSocksRequested(uid: string, host: string, port: number): Promise<void> {
+    const dnsLookupAsync = util.promisify(require('dns').lookup);
     if (host === 'local.playwright')
       host = 'localhost';
     try {
