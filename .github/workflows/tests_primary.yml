@@ -32,7 +32,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: 12
-    - run: npm i -g npm@7
+    - run: npm i -g npm@8
     - run: npm ci
       env:
         DEBUG: pw:install
@@ -61,7 +61,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: 12
-    - run: npm i -g npm@7
+    - run: npm i -g npm@8
     - run: npm ci
       env:
         DEBUG: pw:install
@@ -80,12 +80,11 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: 12
-    - run: npm i -g npm@7
+    - run: npm i -g npm@8
     - run: npm ci
       env:
         DEBUG: pw:install
     - run: npm run build
-    - run: npx playwright install --with-deps
     - run: cd tests/playwright-test/stable-test-runner && npx playwright install docker-image
     - run: npm run vtest
     - uses: actions/upload-artifact@v1
