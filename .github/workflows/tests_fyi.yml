@@ -64,6 +64,8 @@ jobs:
       run: utils/avd_recreate.sh
     - name: Start Android Emulator
       run: utils/avd_start.sh
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
     - name: Run tests
       run: npm run atest -- --shard=${{ matrix.shard }}/2
     - run: ./utils/upload_flakiness_dashboard.sh ./test-results/report.json
