@@ -16,7 +16,7 @@
     "ctest": "playwright test --config=tests/config/default.playwright.config.ts --project=chromium",
     "ftest": "playwright test --config=tests/config/default.playwright.config.ts --project=firefox",
     "wtest": "playwright test --config=tests/config/default.playwright.config.ts --project=webkit",
-    "atest": "playwright test --config=tests/config/android.config.ts",
+    "atest": "playwright test --config=tests/config/android.config.ts --reporter=list",
     "etest": "playwright test --config=tests/config/electron.config.ts",
     "htest": "playwright test --config=packages/html-reporter",
     "ttest": "node ./tests/playwright-test/stable-test-runner/node_modules/@playwright/test/cli test --config=tests/playwright-test/playwright-test.config.ts",
