@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2]
+        shard: [1]
     # use mac build for emulator hardware accelerator
     runs-on: macos-latest
     steps:
