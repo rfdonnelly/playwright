@@ -18,6 +18,7 @@ import debug from 'debug';
 import * as types from '../types';
 import { EventEmitter } from 'events';
 import fs from 'fs';
+import os from 'os';
 import * as stream from 'stream';
 import * as ws from 'ws';
 import { createGuid, makeWaitForNextTask } from '../../utils/utils';
@@ -32,6 +33,7 @@ import { TimeoutSettings } from '../../utils/timeoutSettings';
 import { AndroidWebView } from '../../protocol/channels';
 import { CRPage } from '../chromium/crPage';
 import { SdkObject, internalCallMetadata } from '../instrumentation';
+import path from 'path';
 
 export interface Backend {
   devices(): Promise<DeviceBackend[]>;
@@ -256,6 +258,7 @@ export class AndroidDevice extends SdkObject {
     await androidBrowser._init();
     this._browserConnections.add(androidBrowser);
 
+    const artifactsDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'playwright-artifacts-'));
     const browserOptions: BrowserOptions = {
       ...this._android._playwrightOptions,
       name: 'clank',
@@ -264,7 +267,7 @@ export class AndroidDevice extends SdkObject {
       persistent: { ...options, noDefaultViewport: true },
       artifactsDir: '',
       downloadsPath: '',
-      tracesDir: '',
+      tracesDir: artifactsDir,
       browserProcess: new ClankBrowserProcess(androidBrowser),
       proxy: options.proxy,
       protocolLogger: helper.debugProtocolLogger(),
