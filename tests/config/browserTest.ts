@@ -49,8 +49,8 @@ const test = baseTest.extend<BrowserTestTestFixtures, BrowserTestWorkerFixtures>
     await run(playwright[browserName]);
   }, { scope: 'worker' } ],
 
-  defaultSameSiteCookieValue: [async ({ browserName, browserMajorVersion }, run) => {
-    await run(browserName === 'chromium' || (browserName === 'firefox' && browserMajorVersion >= 96 && browserMajorVersion < 97) ? 'Lax' : 'None');
+  defaultSameSiteCookieValue: [async ({ browserName }, run) => {
+    await run(browserName === 'chromium' ? 'Lax' : 'None');
   }, { scope: 'worker' } ],
 
   browserMajorVersion: [async ({ browserVersion }, run) => {

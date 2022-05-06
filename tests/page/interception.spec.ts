@@ -151,7 +151,7 @@ it('should work with regular expression passed from a different context', async 
 });
 
 it('should not break remote worker importScripts', async ({ page, server, browserName, browserMajorVersion }) => {
-  it.fixme(browserName && browserMajorVersion < 91);
+  it.fixme(browserName === 'chromium' && browserMajorVersion < 91);
 
   await page.route('**', async route => {
     await route.continue();

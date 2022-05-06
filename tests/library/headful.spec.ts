@@ -104,25 +104,20 @@ it('should(not) block third party cookies', async ({ browserType, server, browse
     return document.cookie;
   });
   await page.waitForTimeout(2000);
-  const allowsThirdParty = browserName === 'firefox' && browserMajorVersion >= 97;
-  expect(documentCookie).toBe(allowsThirdParty ? 'username=John Doe' : '');
+  expect(documentCookie).toBe('username=John Doe');
   const cookies = await page.context().cookies(server.CROSS_PROCESS_PREFIX + '/grid.html');
-  if (allowsThirdParty) {
-    expect(cookies).toEqual([
-      {
-        'domain': '127.0.0.1',
-        'expires': -1,
-        'httpOnly': false,
-        'name': 'username',
-        'path': '/',
-        'sameSite': 'None',
-        'secure': false,
-        'value': 'John Doe'
-      }
-    ]);
-  } else {
-    expect(cookies).toEqual([]);
-  }
+  expect(cookies).toEqual([
+    {
+      'domain': '127.0.0.1',
+      'expires': -1,
+      'httpOnly': false,
+      'name': 'username',
+      'path': '/',
+      'sameSite': 'None',
+      'secure': false,
+      'value': 'John Doe'
+    }
+  ]);
   await browser.close();
 });
 

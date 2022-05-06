@@ -426,8 +426,8 @@ it('should work with encoded server - 2', async ({ page, server, browserName, br
   });
   const response = await page.goto(`data:text/html,<link rel="stylesheet" href="${server.PREFIX}/fonts?helvetica|arial"/>`);
   expect(response).toBe(null);
-  if (browserName === 'firefox' && browserMajorVersion >= 97)
-    expect(requests.length).toBe(2); // Firefox DevTools report to navigations in this case as well.
+  if (browserName === 'firefox')
+    expect(requests.length).toBe(2); // https://bugzilla.mozilla.org/show_bug.cgi?id=1759738
   else
     expect(requests.length).toBe(1);
   expect((await requests[0].response()).status()).toBe(404);
