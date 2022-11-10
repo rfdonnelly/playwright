@@ -800,6 +800,15 @@ interface TestConfig {
    *
    * And the following `page-click.spec.ts` that uses `toHaveScreenshot()` call:
    *
+   * ```js
+   * // page-click.spec.ts
+   * import { test, expect } from '@playwright/test';
+   *
+   * test('should work', async ({ page }) => {
+   *   await expect(page).toHaveScreenshot(['foo', 'bar', 'baz.png']);
+   * });
+   * ```
+   *
    * The list of supported tokens:
    * - `{testDir}` - Project's `testDir`.
    *   - Example: `tests/`
@@ -4607,6 +4616,15 @@ interface TestProject {
    * ```
    *
    * And the following `page-click.spec.ts` that uses `toHaveScreenshot()` call:
+   *
+   * ```js
+   * // page-click.spec.ts
+   * import { test, expect } from '@playwright/test';
+   *
+   * test('should work', async ({ page }) => {
+   *   await expect(page).toHaveScreenshot(['foo', 'bar', 'baz.png']);
+   * });
+   * ```
    *
    * The list of supported tokens:
    * - `{testDir}` - Project's `testDir`.
