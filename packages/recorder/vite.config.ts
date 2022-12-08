@@ -18,8 +18,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import * as path from 'path';
 
+const isChromeExtension: boolean = true;
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     react()
   ],
@@ -31,12 +34,17 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../playwright-core/lib/webpack/recorder'),
+    outDir: isChromeExtension ?
+      path.resolve(__dirname, '../chromium-playwright-extension/recorder') :
+      path.resolve(__dirname, '../playwright-core/lib/webpack/recorder'),
     emptyOutDir: true,
     rollupOptions: {
       output: {
         manualChunks: undefined,
       },
     },
+  },
+  define: {
+    __IS_CHROME_EXTENSION__: isChromeExtension,
   }
 });

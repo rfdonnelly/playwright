@@ -41,7 +41,7 @@ declare global {
   }
 }
 
-export interface IRecorderApp extends EventEmitter {
+export interface IRecorderApp extends EventEmitter  {
   close(): Promise<void>;
   setPaused(paused: boolean): Promise<void>;
   setMode(mode: 'none' | 'recording' | 'inspecting'): Promise<void>;

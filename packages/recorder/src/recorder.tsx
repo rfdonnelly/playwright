@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-import type { CallLog, Mode, Source } from './recorderTypes';
+import type { CallLog, EventData, Mode, Source } from './recorderTypes';
 import { CodeMirrorWrapper } from '@web/components/codeMirrorWrapper';
 import { Source as SourceView } from '@web/components/source';
 import { SplitView } from '@web/components/splitView';
@@ -30,7 +30,7 @@ declare global {
   interface Window {
     playwrightSetFileIfNeeded: (file: string) => void;
     playwrightSetSelector: (selector: string, focus?: boolean) => void;
-    dispatch(data: any): Promise<void>;
+    dispatch(data: EventData): Promise<void>;
   }
 }
 
@@ -112,15 +112,17 @@ export const Recorder: React.FC<RecorderProps> = ({
       <ToolbarButton icon='files' title='Copy' disabled={!source || !source.text} onClick={() => {
         copy(source.text);
       }}></ToolbarButton>
-      <ToolbarButton icon='debug-continue' title='Resume (F8)' disabled={!paused} onClick={() => {
-        window.dispatch({ event: 'resume' });
-      }}></ToolbarButton>
-      <ToolbarButton icon='debug-pause' title='Pause (F8)' disabled={paused} onClick={() => {
-        window.dispatch({ event: 'pause' });
-      }}></ToolbarButton>
-      <ToolbarButton icon='debug-step-over' title='Step over (F10)' disabled={!paused} onClick={() => {
-        window.dispatch({ event: 'step' });
-      }}></ToolbarButton>
+      {!__IS_CHROME_EXTENSION__ && (<>
+        <ToolbarButton icon='debug-continue' title='Resume (F8)' disabled={!paused} onClick={() => {
+          window.dispatch({ event: 'resume' });
+        }}></ToolbarButton>
+        <ToolbarButton icon='debug-pause' title='Pause (F8)' disabled={paused} onClick={() => {
+          window.dispatch({ event: 'pause' });
+        }}></ToolbarButton>
+        <ToolbarButton icon='debug-step-over' title='Step over (F10)' disabled={!paused} onClick={() => {
+          window.dispatch({ event: 'step' });
+        }}></ToolbarButton>
+      </>)}
       <div style={{ flex: 'auto' }}></div>
       <div>Target:</div>
       <select className='recorder-chooser' hidden={!sources.length} value={fileId} onChange={event => {
@@ -147,7 +149,7 @@ export const Recorder: React.FC<RecorderProps> = ({
             copy(locator);
           }}></ToolbarButton>
         </Toolbar>
-        <CallLogView language={source.language} log={Array.from(log.values())}/>
+        {!__IS_CHROME_EXTENSION__ && <CallLogView language={source.language} log={Array.from(log.values())}/>}
       </div>
     </SplitView>
   </div>;

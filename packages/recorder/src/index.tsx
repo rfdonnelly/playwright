@@ -17,11 +17,17 @@
 import '@web/common.css';
 import { applyTheme } from '@web/theme';
 import '@web/third_party/vscode/codicon.css';
-import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Main } from './main';
+import type { EventData } from './recorderTypes';
 
 (async () => {
   applyTheme();
   ReactDOM.render(<Main/>, document.querySelector('#root'));
+  if (__IS_CHROME_EXTENSION__) {
+    window.document.body.style.width = '500px';
+    window.document.body.style.height = '600px';
+    window.dispatch = async (data: EventData) => chrome.runtime.sendMessage(data);
+    window.dispatch({ event: 'init' });
+  }
 })();
