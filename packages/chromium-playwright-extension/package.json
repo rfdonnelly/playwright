@@ -1,0 +1,10 @@
+{
+  "name": "chromium-playwright-extension",
+  "scripts": {
+    "build": "node build.mjs --minify",
+    "watch": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.203"
+  }
+}

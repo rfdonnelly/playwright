@@ -18,17 +18,8 @@ import type * as actions from '../recorder/recorderActions';
 import { type InjectedScript } from '../injected/injectedScript';
 import { generateSelector, querySelector } from '../injected/selectorGenerator';
 import type { Point } from '../../common/types';
-import type { UIState } from '@recorder/recorderTypes';
+import '@recorder/recorderTypes';
 import { Highlight } from '../injected/highlight';
-
-
-declare module globalThis {
-  let __pw_recorderPerformAction: (action: actions.Action) => Promise<void>;
-  let __pw_recorderRecordAction: (action: actions.Action) => Promise<void>;
-  let __pw_recorderState: () => Promise<UIState>;
-  let __pw_recorderSetSelector: (selector: string) => Promise<void>;
-  let __pw_refreshOverlay: () => void;
-}
 
 class Recorder {
   private _injectedScript: InjectedScript;
@@ -52,10 +43,10 @@ class Recorder {
     this._refreshListenersIfNeeded();
     injectedScript.onGlobalListenersRemoved.add(() => this._refreshListenersIfNeeded());
 
-    globalThis.__pw_refreshOverlay = () => {
+    window.__pw_refreshOverlay = () => {
       this._pollRecorderMode().catch(e => console.log(e)); // eslint-disable-line no-console
     };
-    globalThis.__pw_refreshOverlay();
+    window.__pw_refreshOverlay();
     if (injectedScript.isUnderTest)
       console.error('Recorder script ready for test'); // eslint-disable-line no-console
   }
@@ -91,7 +82,7 @@ class Recorder {
     const pollPeriod = 1000;
     if (this._pollRecorderModeTimer)
       clearTimeout(this._pollRecorderModeTimer);
-    const state = await globalThis.__pw_recorderState().catch(e => null);
+    const state = await window.__pw_recorderState().catch(e => null);
     if (!state) {
       this._pollRecorderModeTimer = setTimeout(() => this._pollRecorderMode(), pollPeriod);
       return;
@@ -157,11 +148,15 @@ class Recorder {
     return true;
   }
 
+  private _isPlaywrightExtensionOverlay(event: Event): boolean {
+    return event.composedPath().some(element => (element as HTMLElement).nodeName === 'PLAYWRIGHT-EXTENSION-OVERLAY');
+  }
+
   private _onClick(event: MouseEvent) {
     if (!event.isTrusted)
       return;
     if (this._mode === 'inspecting')
-      globalThis.__pw_recorderSetSelector(this._hoveredModel ? this._hoveredModel.selector : '');
+      window.__pw_recorderSetSelector(this._hoveredModel ? this._hoveredModel.selector : '', this._hoveredModel?.elements ?? []);
     if (this._shouldIgnoreMouseEvent(event))
       return;
     if (this._actionInProgress(event))
@@ -192,6 +187,8 @@ class Recorder {
   }
 
   private _shouldIgnoreMouseEvent(event: MouseEvent): boolean {
+    if (this._isPlaywrightExtensionOverlay(event))
+      return true;
     const target = this._deepEventTarget(event);
     if (this._mode === 'none')
       return true;
@@ -228,6 +225,8 @@ class Recorder {
 
   private _onMouseMove(event: MouseEvent) {
     if (!event.isTrusted)
+      return;
+    if (this._isPlaywrightExtensionOverlay(event))
       return;
     if (this._mode === 'none')
       return;
@@ -285,7 +284,7 @@ class Recorder {
     const target = this._deepEventTarget(event);
 
     if (target.nodeName === 'INPUT' && (target as HTMLInputElement).type.toLowerCase() === 'file') {
-      globalThis.__pw_recorderRecordAction({
+      window.__pw_recorderRecordAction({
         name: 'setInputFiles',
         selector: this._activeModel!.selector,
         signals: [],
@@ -303,7 +302,7 @@ class Recorder {
       // Non-navigating actions are simply recorded by Playwright.
       if (this._consumedDueWrongTarget(event))
         return;
-      globalThis.__pw_recorderRecordAction({
+      window.__pw_recorderRecordAction({
         name: 'fill',
         selector: this._activeModel!.selector,
         signals: [],
@@ -407,7 +406,7 @@ class Recorder {
   private async _performAction(action: actions.Action) {
     this._clearHighlight();
     this._performingAction = true;
-    await globalThis.__pw_recorderPerformAction(action).catch(() => {});
+    await window.__pw_recorderPerformAction(action).catch(() => { });
     this._performingAction = false;
 
     // If that was a keyboard action, it similarly requires new selectors for active model.
@@ -448,7 +447,7 @@ function buttonForEvent(event: MouseEvent): 'left' | 'middle' | 'right' {
   return 'left';
 }
 
-function positionForEvent(event: MouseEvent): Point |undefined {
+function positionForEvent(event: MouseEvent): Point | undefined {
   const targetElement = (event.target as HTMLElement);
   if (targetElement.nodeName !== 'CANVAS')
     return;

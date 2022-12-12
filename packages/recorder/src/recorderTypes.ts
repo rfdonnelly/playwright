@@ -15,6 +15,7 @@
 */
 
 import type { Language } from '../../playwright-core/src/server/isomorphic/locatorGenerators';
+import type { Action } from 'playwright-core/src/server/recorder/recorderActions';
 
 export type Point = { x: number, y: number };
 
@@ -79,5 +80,11 @@ declare global {
     playwrightSetSelector: (selector: string, focus?: boolean) => void;
     playwrightSourcesEchoForTest: Source[];
     dispatch(data: any): Promise<void>;
+
+    __pw_recorderPerformAction: (action: Action) => Promise<void>;
+    __pw_recorderRecordAction: (action: Action) => Promise<void>;
+    __pw_recorderState: () => Promise<UIState>;
+    __pw_recorderSetSelector: (selector: string, elements: Element[]) => Promise<void>;
+    __pw_refreshOverlay: () => void;
   }
 }
