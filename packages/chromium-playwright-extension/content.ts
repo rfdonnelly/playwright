@@ -54,7 +54,9 @@ export class PlaywrightExtension {
         console.log(element);
       this._overlay.locator = selectorAsLocator;
     };
-    window.__pw_recorderPerformAction = async () => { };
+    window.__pw_recorderPerformAction = async () => {
+      console.log(arguments);
+    };
   }
 
   private async _loadInjectedScripts() {
