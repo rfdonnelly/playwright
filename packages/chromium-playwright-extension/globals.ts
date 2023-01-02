@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import '@recorder/recorderTypes';
-import type { PlaywrightExtension } from './content';
+import type { PlaywrightExtension } from './overlay';
 
 declare global {
   interface Window {

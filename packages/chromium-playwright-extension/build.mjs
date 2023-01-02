@@ -19,7 +19,7 @@ import chokidar from 'chokidar';
 import { build } from 'esbuild';
 
 async function buildSourceFiles() {
-  const tsFiles = ['background.ts', 'content.ts'];
+  const tsFiles = ['background.ts', 'overlay.ts', 'content.ts'];
   for (const file of tsFiles) {
     await build({
       entryPoints: [file],

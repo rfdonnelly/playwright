@@ -13,10 +13,41 @@
     "<all_urls>"
   ],
   "permissions": [
+    "debugger",
+    "activeTab",
     "scripting"
   ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "overlay.js.map",
+        "content.js.map",
+        "background.js.map"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }
