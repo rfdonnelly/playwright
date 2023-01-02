@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import '@recorder/recorderTypes';
 import type { Language } from 'playwright-core/lib/server/isomorphic/locatorGenerators';
-import { asLocator } from 'playwright-core/lib/server/isomorphic/locatorGenerators';
-import './globals';
 
 export class PlaywrightExtension {
   private _overlay: PlaywrightExtensionOverlay;
@@ -30,6 +27,8 @@ export class PlaywrightExtension {
     window.addEventListener('pw:recorder:event', ((ev: CustomEvent) => {
       if (ev.detail.type === 'toggleRecorderMode')
         this._toggleOverlayVisiblity();
+      if (ev.detail.type === 'setLocator')
+        this._overlay.locator = ev.detail.locator;
     }) as EventListener);
   }
 

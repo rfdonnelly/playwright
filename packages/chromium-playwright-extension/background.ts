@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { asLocator } from 'playwright-core/lib/server/isomorphic/locatorGenerators';
 import './globals';
 
 chrome.action.onClicked.addListener(async tab => {
@@ -24,9 +23,7 @@ chrome.action.onClicked.addListener(async tab => {
     target: {
       tabId: tab.id,
     },
-    func: () => {
-      return !window.__pwExtension;
-    },
+    func: () => !window.__pwExtension,
     world: 'MAIN',
   });
 
@@ -54,6 +51,7 @@ chrome.action.onClicked.addListener(async tab => {
 });
 
 chrome.runtime.onMessageExternal.addListener(async message => {
+  // TODO: figure out how to make this nicer.
   const forwardMessage = async () => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     for (const tab of tabs) {
@@ -67,16 +65,3 @@ chrome.runtime.onMessageExternal.addListener(async message => {
   else if (message?.type === 'toggleRecorderMode')
     await forwardMessage();
 });
-
-
-chrome.runtime.onMessage.addListener(async (message, sender) => {
-  if (message?.type === 'setSelector')
-    await setSelector(message.selector, sender.tab?.id, sender.frameId);
-});
-
-async function setSelector(selector: string, tabId?: number, frameId?: number) {
-  if (!tabId || isNaN(frameId))
-    return;
-  // build the frame tree and find the frame with the given id.
-  asLocator('javascript', selector, false);
-}
