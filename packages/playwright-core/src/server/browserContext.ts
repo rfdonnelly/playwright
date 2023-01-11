@@ -212,6 +212,7 @@ export abstract class BrowserContext extends SdkObject {
     await this.setOffline(!!this._options.offline);
     await this.setUserAgent(this._options.userAgent);
     await this._resetCookies();
+    await page?.resetNetworkCache();
 
     await page?.resetForReuse(metadata);
   }
@@ -259,6 +260,7 @@ export abstract class BrowserContext extends SdkObject {
   protected abstract doUpdateRequestInterception(): Promise<void>;
   protected abstract doClose(): Promise<void>;
   protected abstract onClosePersistent(): void;
+  protected abstract _clearBrowserCache(): Promise<void>;
 
   async cookies(urls: string | string[] | undefined = []): Promise<channels.NetworkCookie[]> {
     if (urls && !Array.isArray(urls))

@@ -90,6 +90,8 @@ export interface PageDelegate {
   pdf?: (options: channels.PagePdfParams) => Promise<Buffer>;
   coverage?: () => any;
 
+  resetNetworkCache?(): Promise<void>;
+
   // Work around WebKit's raf issues on Windows.
   rafCountForStablePosition(): number;
   // Work around Chrome's non-associated input and protocol.
@@ -344,6 +346,10 @@ export class Page extends SdkObject {
 
   extraHTTPHeaders(): types.HeadersArray | undefined {
     return this._extraHTTPHeaders;
+  }
+
+  async resetNetworkCache() {
+    await this._delegate.resetNetworkCache?.();
   }
 
   async _onBindingCalled(payload: string, context: dom.FrameExecutionContext) {
